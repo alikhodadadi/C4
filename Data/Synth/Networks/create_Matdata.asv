@@ -1,0 +1,6 @@
+
+%% This script converts the textfile to mat matrices
+filename = 'rand_kron.txt';
+A = importdata(filename);
+data = A.data;
+data(

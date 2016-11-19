@@ -1,0 +1,217 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Simlator of Correlated Cascades Model</title><meta name="generator" content="MATLAB 8.1"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2015-07-31"><meta name="DC.source" content="cc_simulator_events.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, tt, code { font-size:12px; }
+pre { margin:0px 0px 20px; }
+pre.error { color:red; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Simlator of Correlated Cascades Model</h1><p>This function simulates <tt>N</tt> events starting from <img src="cc_simulator_events_eq30920.png" alt="$t_{0}$">, using the <i>model</i> and <i>events</i> it accepts as input.</p><p><b>INPUTS:</b></p><div><ul><li>model: a model containing the <tt>a</tt> and <img src="cc_simulator_events_eq68803.png" alt="$\mu$"> and <tt>structure</tt></li><li>events: the set of events</li><li>t: the time for which we want to calculate Intensity</li><li>n: the number of  first events we use to calculate the intensity at <tt>t</tt></li></ul></div><p><b>OUTPUTS:</b></p><div><ul><li>events: an struct containing the times, nodes and products of generated   events</li></ul></div><pre class="codeinput"><span class="keyword">function</span> events = cc_simulator_events(model, t0, N, exp_coeff, events, w, g)
+<span class="keyword">if</span> nargin &lt; 6
+    w = 1;
+<span class="keyword">end</span>
+<span class="keyword">if</span> nargin &lt; 7
+   g = @(x,w) w*exp(-w*x);
+<span class="keyword">end</span>
+<span class="keyword">if</span> nargin &lt; 5
+    events = struct;
+    init_size = 10000;
+    events.times    = zeros(init_size,1);
+    events.nodes    = zeros(init_size,1);
+    events.products = zeros(init_size,1);
+    n = 0;
+<span class="keyword">else</span>
+    n = length(find(events.times &lt; t0));
+<span class="keyword">end</span>
+
+t = t0;
+iter = 0;
+<span class="keyword">while</span> n &lt; N
+    I =  HawkesIntensity(model, events, t, n, w, g);
+
+    <span class="comment">%calculate the overal intensity of each node</span>
+    u_Is = sum(I,2);
+
+    sumI = sum(u_Is);
+
+    t = t+exprnd(1./sumI);
+    iter = iter + 1;
+    <span class="keyword">if</span>(mod(iter,100)==0)
+        disp([<span class="string">'(events so far:'</span>, num2str(n),<span class="string">', time so far:'</span>, num2str(t), <span class="string">')'</span>]);
+    <span class="keyword">end</span>
+
+    Is = HawkesIntensity(model, events, t, n, w, g);
+    sumIs = sum(sum(Is,2));
+
+    u = rand();
+    <span class="keyword">if</span>(u*sumI&lt;sumIs)
+        d = sample_user(Is);
+        p = sample_product(Is(d,:)', exp_coeff);
+        <span class="keyword">if</span> n == length(events.times)
+            tmp = events.times;
+            events.times = zeros(2*n,1);
+            events.times(1:n) = tmp;
+            tmp = events.nodes;
+            events.nodes = zeros(2*n,1);
+            events.nodes(1:n) = tmp;
+            <span class="comment">%</span>
+            tmp = events.products;
+            events.products = zeros(2*n,1);
+            events.products(1:n) = tmp;
+        <span class="keyword">end</span>
+        n = n + 1;
+        events.times(n) = t;
+        events.nodes(n) = d;
+        events.products(n) = p;
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+events.times = events.times(1:n);
+events.nodes = events.nodes(1:n);
+events.products = events.products(1:n);
+
+<span class="keyword">end</span>
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2013a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Simlator of Correlated Cascades Model
+% This function simulates |N| events starting from $t_{0}$, using the _model_
+% and _events_ it accepts as input.
+%
+% *INPUTS:*
+%
+% * model: a model containing the |a| and $\mu$ and |structure|
+% * events: the set of events 
+% *  t: the time for which we want to calculate Intensity
+% *  n: the number of  first events we use to calculate the intensity at
+% |t|
+%
+% *OUTPUTS:*
+%
+% *  events: an struct containing the times, nodes and products of generated
+%   events
+
+function events = cc_simulator_events(model, t0, N, exp_coeff, events, w, g)
+if nargin < 6
+    w = 1;
+end
+if nargin < 7
+   g = @(x,w) w*exp(-w*x);
+end
+if nargin < 5
+    events = struct;
+    init_size = 10000;
+    events.times    = zeros(init_size,1);
+    events.nodes    = zeros(init_size,1);
+    events.products = zeros(init_size,1);
+    n = 0;
+else
+    n = length(find(events.times < t0));
+end
+
+t = t0;
+iter = 0;
+while n < N
+    I =  HawkesIntensity(model, events, t, n, w, g);
+    
+    %calculate the overal intensity of each node
+    u_Is = sum(I,2);
+
+    sumI = sum(u_Is);
+    
+    t = t+exprnd(1./sumI);
+    iter = iter + 1;
+    if(mod(iter,100)==0) 
+        disp(['(events so far:', num2str(n),', time so far:', num2str(t), ')']);
+    end
+    
+    Is = HawkesIntensity(model, events, t, n, w, g);
+    sumIs = sum(sum(Is,2));
+
+    u = rand();    
+    if(u*sumI<sumIs)
+        d = sample_user(Is);
+        p = sample_product(Is(d,:)', exp_coeff);
+        if n == length(events.times)
+            tmp = events.times;
+            events.times = zeros(2*n,1);
+            events.times(1:n) = tmp;
+            tmp = events.nodes;
+            events.nodes = zeros(2*n,1);
+            events.nodes(1:n) = tmp;
+            %
+            tmp = events.products;
+            events.products = zeros(2*n,1);
+            events.products(1:n) = tmp;
+        end
+        n = n + 1;
+        events.times(n) = t;
+        events.nodes(n) = d;
+        events.products(n) = p;
+    end
+end
+events.times = events.times(1:n);
+events.nodes = events.nodes(1:n);
+events.products = events.products(1:n);
+
+end
+
+##### SOURCE END #####
+--></body></html>
