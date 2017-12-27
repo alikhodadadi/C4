@@ -1,6 +1,5 @@
 # C4: Correlated Cascades: Compete or Cooperate
 Source codes and datasets of C4 paper [1]. 
-
 For more information please see [C4](http://ml.dml.ir/research/4c).
 
 ## Folders 
