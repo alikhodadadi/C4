@@ -42,7 +42,7 @@ If you find a bug, please send the bug report to "khodadadi@ce.sharif.edu",
 including if necessary the input file and the parameters that caused the bug.
 You can also send me any question, comment or suggestion about the code.
 
-[1] Zarezade, A., Khodadadi, A., Farajtabar, M., Rabiee, H.R., Zha, H., Correlated Cascades: Compete or cooperate, Thirty-First AAAI Conference on Artificial Intelli-
+[1] Zarezade, A., Khodadadi, A., Farajtabar, M., Rabiee, H.R., Zha, H., _Correlated Cascades: Compete or cooperate_, Thirty-First AAAI Conference on Artificial Intelli-
 gence, 2016, [arXiv](https://arxiv.org/pdf/1510.00936)
 
 :copyright: 2015 Ali Khodadadi, Ali Zarezade All Rights Reserved.
