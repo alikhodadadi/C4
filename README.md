@@ -1,13 +1,13 @@
 # C4: Correlated Cascades: Compete or Cooperate
-Source codes and datasets of C4 paper [1].
-For more information please see: http://ml.dml.ir/research/4c
+Source codes and datasets of C4 paper [1]. For more information please see [C4](http://ml.dml.ir/research/4c)
+
 :copyright: 2015 Ali Khodadadi, Ali Zarezade All Rights Reserved.
 
 [1] Zarezade, A., Khodadadi, A., Farajtabar, M., Rabiee, H.R., Zha, H., Correlated Cascades: Compete or cooperate, Thirty-First AAAI Conference on Artificial Intelli-
 gence, 2016, [arXiv](https://arxiv.org/pdf/1510.00936)
 
 
-### Folders 
+## Folders 
 The main folders are as the followings:
 1. Data:
 	This folder contains the synthetic and real data sets we 
@@ -32,7 +32,7 @@ The main folders are as the followings:
 	
 The details of implementations are provided in each file.
 
-### Compile
+## Compile
 To execute the experiments please run the following files:
 1. Synth_runBatch.m:
 	This file executes the experiments on synthetic data,
@@ -41,7 +41,7 @@ To execute the experiments please run the following files:
 	This file executes the experiments on real data,
 	and saves the results in "Results" folder.
 
-### Disclaimer 
+_Disclaimer_
 If you find a bug, please send the bug report to "khodadadi@ce.sharif.edu",
 including if necessary the input file and the parameters that caused the bug.
 You can also send me any question, comment or suggestion about the code.
